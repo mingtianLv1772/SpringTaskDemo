@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!--实现业务规则的bean-->
+    <bean id="taskDemoService" class="com.lnson.springtask.demo.service.impl.TaskDemoServiceImpl"/>
+
+    <!--可以配置多个定时任务-->
+    <task:scheduled-tasks>
+<!--    配置简单定时规则
+        initial-delay：设置tomcat服务器启动完成后，到多少毫秒之后，开始执行定时任务
+        fixed-delay：任务执行的频度，设置每隔多少毫秒执行一次定时任务
+
+        <task:scheduled ref="taskDemoService" method="firstTask" initial-delay="1000" fixed-delay="1000"/>
+        <task:scheduled ref="taskDemoService" method="secondTask" initial-delay="2000" fixed-delay="2000"/>
+-->
+
+<!--    配置复杂定时规则
+            cron表达式是一个字符串，用来定义复杂的定时规则，由七部分组成，每部分中间用空格隔开。
+-->
+        <!--每隔5秒执行一次定时任务-->
+        <task:scheduled ref="taskDemoService" method="firstTask" cron="*/5 * * * * ?"/>
+        <!--每天的02:00:00执行一次定时任务-->
+        <task:scheduled ref="taskDemoService" method="secondTask" cron="0 0 2 * * ?"/>
+    </task:scheduled-tasks>
+
+</beans>
