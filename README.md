@@ -1,0 +1,2 @@
+# SpringTaskDemo
+详细记录SpringTask通过纯XML配置和纯注解开发实现java中的定时任务以及简单说明java.util.Timer和java.util.TimerTask的使用
